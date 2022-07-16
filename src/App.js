@@ -1,25 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import { Loader, Snackbar } from 'components'
+import theme from 'theme';
+import { ThemeProvider } from '@mui/material'
+import { UserRoutes, AuthRoutes } from 'routes'
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from 'store/reducers/user.slice';
+import jwtDecode from 'jwt-decode'
+import { useEffect } from 'react';
 
 function App() {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  console.log(user)
+
+  useEffect(() => {
+    const token = localStorage.getItem('user')
+    if (token) dispatch(setUser(jwtDecode(token)))
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Snackbar />
+      <Loader />
+      {user ? <UserRoutes /> : <AuthRoutes />}
+    </ThemeProvider>
   );
 }
 
 export default App;
+
