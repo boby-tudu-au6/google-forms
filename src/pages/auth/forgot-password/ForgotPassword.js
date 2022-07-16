@@ -38,7 +38,7 @@ function ForgotPassword() {
         resolver: yupResolver(validationSchema)
     })
     useEffect(() => {
-        setLink(`http://localhost:3000/reset-password/${password}`)
+        setLink(`${window.location.origin}/reset-password/${password}`)
     }, [password])
     const onSubmit = async (values) => {
         try {
