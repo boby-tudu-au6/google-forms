@@ -41,7 +41,7 @@ const FastSelect = ({
   disabled = false,
   emptyField = false,
   variant = "outlined",
-  // ...rest
+  ...rest
 }) => {
   const {
     field,
