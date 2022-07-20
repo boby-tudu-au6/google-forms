@@ -4,16 +4,15 @@ import { startLoading, stopLoading } from 'store/reducers/loading.slice'
 import { openSnack } from 'store/reducers/snack.slice'
 
 
-export * from './user'
+export * from './user.api'
+export * from './form.api'
 
 axios.interceptors.request.use(req => {
     store.dispatch(startLoading())
     return {
         ...req,
         baseURL: 'https://google-forms-iviewlabs.herokuapp.com',
-        headers: {
-
-        }
+        // baseURL:"http://localhost:8080"
     }
 }, err => {
     if (err.response && err.response.data && err.response.data.error) { store.dispatch(openSnack({ type: 'error', text: err.response.data.error })) }

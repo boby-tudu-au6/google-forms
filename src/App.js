@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 function App() {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
-  console.log(user)
 
   useEffect(() => {
     const token = localStorage.getItem('user')

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { Paper, Button, Typography } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@mui/styles'
 import { registerUser } from 'api'
 
@@ -12,8 +12,6 @@ const validationSchema = yup.object({
   name: yup.string().min(3, 'min 3 char required').required("name is required"),
   email: yup.string().email("should be perfect email").required("email is required"),
   password: yup.string().min(3, 'min 3 char required').required("password is required"),
-  designation: yup.string().required("designation is required"),
-  age: yup.date().required("DOB is required")
 })
 
 const useStyles = makeStyles({
@@ -29,30 +27,25 @@ const useStyles = makeStyles({
 
 function Register() {
   const classes = useStyles()
-  const navigate = useNavigate()
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
       email: "",
       password: "",
-      designation: "",
-      age: null
     },
     resolver: yupResolver(validationSchema)
   })
   const onSubmit = async (values) => {
-      try {
-          await registerUser(values)
-          reset({
-            name: "",
-            email: "",
-            password: "",
-            designation: "",
-            age: null
-          })
-      } catch (error) {
-          console.log(error.message)
-      }
+    try {
+      await registerUser(values)
+      reset({
+        name: "",
+        email: "",
+        password: "",
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
   }
   return (
     <div className={classes.root}>
@@ -65,8 +58,6 @@ function Register() {
             { name: "name", label: "Name", type: 'text', gridProps: { xs: 12 } },
             { name: "email", label: "Email", type: 'text', gridProps: { xs: 12 } },
             { name: "password", label: "Password", type: 'password', gridProps: { xs: 12 } },
-            { name: "designation", label: "Designation", type: 'text', gridProps: { xs: 12 } },
-            { name: "age", label: "DOB", type: 'date', gridProps: { xs: 12 } },
           ]}
         />
         <br />
